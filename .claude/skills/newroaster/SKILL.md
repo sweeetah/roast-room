@@ -1,8 +1,17 @@
 ---
+disable-model-invocation: true
 name: newroaster
 description: Use when someone wants to add a new advisor to the Roast Room, says "/newroaster", "add a roaster", "add a seat", "add [name] to the council", "build a seat for [name]", "I want [name] on my board", or wants their own advisor (themselves, a mentor, or any public figure) built from public work. Builds the seat the same way the original seven were built. It finds and fetches the person's public sources, extracts their frameworks, rules, positions, stories, and voice with parallel sub-agents, writes the brain, checks every quote is verbatim, writes the council agent, makes their cartoon portrait for the room from a real photo (the same style and talking frames as the original seven), and registers the seat in the roster (on the default board if asked). Also redoes a portrait ("/newroaster portrait <name>"). Not for running a council (that is /roast-room).
 argument-hint: "[full name] [--quick | --deep] [--pillar \"...\"] [--default] | portrait <name>"
 ---
+
+## Home (read first: global, manual-only install)
+
+This skill is installed globally (symlink in `~/.claude/skills/`) and runs only when the user types the slash command. Its home repo is `ROOT=/Volumes/NVME/Dev/roast-room` (fork of nateherkai/roast-room; `upstream` remote = original).
+- Every relative path in this skill and its references (`.claude/...`, `sessions/...`, `build/...`, `app/...`, `roster.json`, `brains/...`, `references/...`, `scripts/...`) resolves against ROOT, not the current cwd. Run scripts as `cd /Volumes/NVME/Dev/roast-room && <cmd>` or use absolute paths. Session folders always go in `/Volumes/NVME/Dev/roast-room/sessions/`.
+- `council-*` agent types are registered only when the session cwd is ROOT. Anywhere else, use the `general-purpose` fallback and give it the absolute path: `Read /Volumes/NVME/Dev/roast-room/.claude/agents/council-<seat>.md and follow it as your instructions for this whole task. Brain paths in it are relative to /Volumes/NVME/Dev/roast-room. Only read files; do not write anything.`
+- Business context lookup ("Context lookup" in Step 1) uses the *caller's* current project (cwd), since that is where the founder's notes live.
+- The live room: `cd /Volumes/NVME/Dev/roast-room && npm start` (background), http://localhost:4730.
 
 ## What this does
 
